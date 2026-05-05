@@ -238,6 +238,8 @@ function getType() {
   var m3 = (scores.H >= (scores.A + scores.P)) ? 'H' : 'P'; // H vs P
   var m4 = (scores.E >= scores.J) ? 'E' : 'J'; // E vs J
 
+  var code = m1 + m2 + m3 + m4
+  
   // 만약 생성된 코드가 TYPES에 없다면 (예외 처리)
   if(!TYPES[code]) {
     // 가장 점수가 높은 지표 순서대로 코드를 재조합하는 Fallback 로직
