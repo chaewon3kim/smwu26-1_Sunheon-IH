@@ -232,16 +232,11 @@ function nextQ(){
 
 // [핵심 보강 로직] 점수와 데이터 타입을 1:1로 매칭
 function getType() {
-  // 1. 각 축의 승자 결정
-  var m1 = (scores.T >= scores.F) ? 'T' : 'F';
-  var m2 = (scores.N >= scores.S) ? 'N' : 'S';
-  
-  // 3번째 축: 역사(H) vs 예술/탐험(A+P) - 이 부분이 미스매치의 핵심 범인이었습니다.
-  // P나 A가 하나라도 상위에 있으면 P로 판정하여 다양성을 확보합니다.
-  var m3 = (scores.H >= (scores.A + scores.P)) ? 'H' : 'P';
-  var m4 = (scores.E >= scores.J) ? 'E' : 'J';
-  
-  var code = m1 + m2 + m3 + m4;
+// 16가지 조합(TYPES)에 무조건 존재할 수밖에 없는 4가지 축 판정
+  var m1 = (scores.T >= scores.F) ? 'T' : 'F'; // T vs F
+  var m2 = (scores.N >= scores.S) ? 'N' : 'S'; // N vs S
+  var m3 = (scores.H >= (scores.A + scores.P)) ? 'H' : 'P'; // H vs P
+  var m4 = (scores.E >= scores.J) ? 'E' : 'J'; // E vs J
 
   // 만약 생성된 코드가 TYPES에 없다면 (예외 처리)
   if(!TYPES[code]) {
