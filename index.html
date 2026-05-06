@@ -418,7 +418,9 @@
     </style>
 
     <!--4. 외부 라이브러리(html2canvas)-->
-    <script src="https://hertzen.com"></script>
+    <!--    cf. "https://hertzen.com"-->
+    <!--    브라우저 요구사항: Firefox 3.5+, Google Chrome, Opera 12+, IE9+, Edge, Safari 6+.-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -649,7 +651,8 @@
                 '<div style="margin-bottom:0.5rem"><div class="section-label">나의 인문학 감수성</div><div class="axes-row">' + axHtml + '</div></div>' +
                 '<div class="share-section"><div class="share-label">친구에게 공유하기</div>' +
                 '<button class="share-btn" onclick="doShare()">공유하기</button>' +
-                '<button class="share-btn copy" onclick="doCopy()">링크 복사</button></div>';
+                '<button class="share-btn copy" onclick="doCopy()">링크 복사</button>' +
+                '<button class="share-btn img" onclick="shareResultImage()">이미지 생성</button></div>';
         }
 
         function doShare() {
@@ -675,6 +678,35 @@
             document.getElementById('nameInput').value = '';
             document.getElementById('s-intro').classList.add('active');
         }
+        async function shareResultImage() {
+            // 1. 캡처할 영역 지정 (결과가 담긴 div의 id가 'result-area'라고 가정)
+            const resultArea = document.getElementById('result-content');
+
+            try {
+                // 2. 화면을 캔버스로 변환
+                const canvas = await html2canvas(resultArea);
+
+                // 3. 캔버스를 파일(Blob)로 변환
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'result.png', { type: 'image/png' });
+
+                    // 4. Web Share API 지원 여부 확인 및 공유 실행
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: '나의 심리테스트 결과',
+                            text: '나의 유형을 확인해보세요!'
+                        });
+                    } else {
+                        alert('이 브라우저에서는 이미지 공유를 지원하지 않습니다. 이미지를 길게 눌러 저장해주세요.');
+                    }
+                }, 'image/png');
+
+            } catch (error) {
+                console.error('공유 실패:', error);
+            }
+        }
+
     </script>
 </body>
 </html>
