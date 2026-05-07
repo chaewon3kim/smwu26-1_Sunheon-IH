@@ -680,8 +680,9 @@
             document.getElementById('s-intro').classList.add('active');
         }
         async function shareResultImage() {
-            // 1. 캡처할 영역 지정 (결과가 담긴 div의 id가 'result-area'라고 가정)
-            const resultArea = document.getElementById('result-content');
+            var text = nickname + '님의 인문학 유형은 [' + window._shareCode + ' ' + window._shareName + ']!\n나도 테스트 해보기 → ' + location.href;
+            // 1. 캡처할 영역 지정 (결과가 담긴 div의 id가 's-result'라고 가정)
+            const resultArea = document.getElementById('s-result');
 
             try {
                 // 2. 화면을 캔버스로 변환
@@ -696,7 +697,7 @@
                         await navigator.share({
                             files: [file],
                             title: '나의 심리테스트 결과',
-                            text: '나의 유형을 확인해보세요!'
+                            text: text//'나의 유형을 확인해보세요!'
                         });
                     } else {
                         alert('이 브라우저에서는 이미지 공유를 지원하지 않습니다. 이미지를 길게 눌러 저장해주세요.');
