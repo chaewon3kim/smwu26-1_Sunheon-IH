@@ -681,8 +681,8 @@
         }
         async function shareResultImage() {
             var text = nickname + '님의 인문학 유형은 [' + window._shareCode + ' ' + window._shareName + ']!\n나도 테스트 해보기 → ' + location.href;
-            // 1. 캡처할 영역 지정 (결과가 담긴 div의 id가 'card'라고 가정)
-            const resultArea = document.getElementById('card');
+            // 1. 캡처할 영역 지정 (결과가 담긴 div의 id가 'result-content'라고 가정)
+            const resultArea = document.getElementById('result-content');
 
             try {
                 // 2. 화면을 캔버스로 변환
